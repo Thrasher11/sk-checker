@@ -26,23 +26,7 @@ function GetStr($string, $start, $end)
   return $str[0];
 }
 
-///Proxy Function
-function rebootproxys()
-  {
-    $poxySocks = file("proxy.txt");
-    $myproxy = rand(0, sizeof($poxySocks) - 1);
-    $poxySocks = $poxySocks[$myproxy];
-    return $poxySocks;
-  }
-  $poxySocks4 = rebootproxys();
 
-///proxy zone function
-
-$username = 'Put Zone Username Here';
-$password = 'Put Zone Password Here';
-//$port = add port and uncomment ;
-$session = mt_rand();
-$super_proxy = 'zone url here';
 
 
 
@@ -70,9 +54,6 @@ $postcode = $matches1[1][0];
 
 //[Auth Section]
   $ch = curl_init();
-curl_setopt($ch, CURLOPT_PROXY, "http://$super_proxy:$port");
-curl_setopt($ch, CURLOPT_PROXYUSERPWD, "$username-session-$session:$password");
-//curl_setopt($ch, CURLOPT_PROXY, $poxySocks4);
 
   curl_setopt($ch, CURLOPT_URL, 'https://api.stripe.com/v1/sources');
   curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
@@ -90,9 +71,7 @@ curl_setopt($ch, CURLOPT_PROXYUSERPWD, "$username-session-$session:$password");
 
 
 $ch = curl_init();
-curl_setopt($ch, CURLOPT_PROXY, "http://$super_proxy:$port");
-curl_setopt($ch, CURLOPT_PROXYUSERPWD, "$username-session-$session:$password");
-//curl_setopt($ch, CURLOPT_PROXY, $poxySocks4);
+
 
 curl_setopt($ch, CURLOPT_URL, 'https://api.stripe.com/v1/customers');
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -117,12 +96,6 @@ $token3 = $cus['id'];
 
 echo "<span>  cvv_check = ".$cvvcheck."</span>";
 
-
-//[Charge Section]
- curl_setopt($ch, CURLOPT_PROXY, "http://$super_proxy:$port");
-curl_setopt($ch, CURLOPT_PROXYUSERPWD, "$username-session-$session:$password");
-//curl_setopt($ch, CURLOPT_PROXY, $poxySocks4);
-
   curl_setopt($ch, CURLOPT_URL, 'https://api.stripe.com/v1/charges');
   curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -138,9 +111,6 @@ curl_setopt($ch, CURLOPT_PROXYUSERPWD, "$username-session-$session:$password");
 $decline3 = trim(strip_tags(getStr($result3,'"decline_code": "','"')));
 
   $ch = curl_init();
-   curl_setopt($ch, CURLOPT_PROXY, "http://$super_proxy:$port");
-curl_setopt($ch, CURLOPT_PROXYUSERPWD, "$username-session-$session:$password");
-//curl_setopt($ch, CURLOPT_PROXY, $poxySocks4);
 
   curl_setopt($ch, CURLOPT_URL, 'https://api.stripe.com/v1/refunds');
   curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
