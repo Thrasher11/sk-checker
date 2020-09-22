@@ -50,7 +50,7 @@
     <button id="mostra" class="btn btn-primary">SHOW/HIDE</button>
 </div>
   <div class="card-body">
-    <h6 style="font-weight: bold;" class="card-title">Approved - <span  id="cLive2" class="badge badge-success">0</span></h6>
+    <h6 style="font-weight: bold;" class="card-title">Approved CVV- <span  id="cLive2" class="badge badge-success">0</span></h6>
     <div id="bode"><span id=".aprovadas" class="aprovadas"></span>
 </div>
   </div>
@@ -59,6 +59,20 @@
 
 <br>
 <br>
+<div class="col-md-12">
+<div class="card">
+<div style="position: absolute;
+        top: 0;
+        right: 0;">
+    <button id="mostra2" class="btn btn-primary">SHOW/HIDE</button>
+</div>
+  <div class="card-body">
+    <h6 style="font-weight: bold;" class="card-title">Approved CCN- <span  id="cLive2" class="badge badge-success">0</span></h6>
+    <div id="bode"><span id=".edrovadas" class="aprovadas"></span>
+</div>
+  </div>
+</div>
+</div>
 <br>
 
 <div class="col-md-12">
@@ -66,7 +80,7 @@
     <div style="position: absolute;
         top: 0;
         right: 0;">
-    <button id="mostra2" class="btn btn-primary">SHOW/HIDE</button>
+    <button id="mostra3" class="btn btn-primary">SHOW/HIDE</button>
 </div>
   <div class="card-body">
     <h6 style="font-weight: bold;" class="card-title">Declined - <span id="cDie2" class="badge badge-danger">0</span></h6>
@@ -103,6 +117,11 @@
                                 removelinha();
                                 ap++;
                                 aprovadas(resultado + "");
+                            }
+                               else if(resultado.match("#Approved_CCN")) {
+                                removelinha();
+                                ed++;
+                                edrovadas(resultado + "");
                             }else {
                                 removelinha();
                                 rp++;
