@@ -95,32 +95,6 @@ $token3 = $cus['id'];
  $declinecode = trim(strip_tags(getStr($result2,'"code": "','"')));
 
 echo "<span>  cvv_check = ".$cvvcheck."</span>";
-
-  curl_setopt($ch, CURLOPT_URL, 'https://api.stripe.com/v1/charges');
-  curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-  curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-  curl_setopt($ch, CURLOPT_POSTFIELDS, 'amount=50&currency=usd&customer='.$token3.'');
-  curl_setopt($ch, CURLOPT_USERPWD, $sk. ':' . '');
-  $result3 = curl_exec($ch);
-
-   $char = json_decode($result3, true);
- $chtoken = trim(strip_tags(getStr($result3,'"charge": "','"')));
-   $chargetoken = $char['charge'];
-$decline3 = trim(strip_tags(getStr($result3,'"decline_code": "','"')));
-
-  $ch = curl_init();
-
-  curl_setopt($ch, CURLOPT_URL, 'https://api.stripe.com/v1/refunds');
-  curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-  curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-  curl_setopt($ch, CURLOPT_POSTFIELDS, 'charge='.$chtoken.'&amount=50&reason=requested_by_customer');
-  curl_setopt($ch, CURLOPT_USERPWD, $sk. ':' . '');
- $result4 = curl_exec($ch);
-
 //////////////////////////////
 $cctwo = substr("$cc", 0, 6);
 
